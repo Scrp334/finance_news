@@ -12,11 +12,18 @@ st.title("🇰🇪 NSE Portfolio Optimizer")
 st.markdown("### Inverse Volatility Weighting Strategy")
 
 # 1. Sidebar for Data Upload
-uploaded_file = st.sidebar.file_uploader("Upload your NSE CSV", type="csv")
+uploaded_file = st.sidebar.file_uploader("Upload your NSE CSV or Excel", type=["csv","xlsx"])
 
 if uploaded_file:
-    df = pd.read_csv(uploaded_file)
-    returns_df = df.iloc[:, 1:].pct_change().dropna()
+    if uploaded_file.name.endswith('.csv'):
+        df = pd.read_csv(uploaded_file)
+    else:
+        df = pd.read_excel(uploaded_file)
+    # Ensure date is col 0
+    df.iloc[:,0] = pd.to_datetime(df.iloc[:,0])
+    df = df.set_index(df.columns[0])
+    # find daily returns
+    returns_df = df.iloc[:, 1:].pct_change().dropna() 
     
     # 2. Asset Selection
     selected_assets = st.sidebar.multiselect("Select Assets", returns_df.columns.tolist(), default=returns_df.columns.tolist())
