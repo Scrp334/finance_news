@@ -43,6 +43,7 @@ cum_returns = (1 + returns_df).cumprod()
 cum_returns['PORTFOLIO'] = (1 + portfolio_daily_return).cumprod()
 
 
+#######----PLOTS----#####==============================================================================================
 # Part II
 # Create a heatmap
 plt.figure(figsize=(10, 8))
@@ -102,4 +103,48 @@ returns_df.rolling(window=20).std().plot(figsize=(12,6))
 plt.title('20-Day Rolling Volatility (Market Turbulence)')
 plt.show()
 
+#========================================================================================================================
 
+# All in 1
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Set the style to look more 'financial'
+plt.style.use('seaborn-v0_8-whitegrid')
+fig, axes = plt.subplots(2, 2, figsize=(18, 12))
+fig.suptitle('Portfolio Construction Analysis: Inverse Volatility Strategy', fontsize=20, fontweight='bold')
+
+# --- 1. Top Left: Cumulative Returns (Growth of $1) ---
+for col in cum_returns.columns:
+    width = 4 if col == 'MY_PORTFOLIO' else 1.2
+    alpha = 1 if col == 'MY_PORTFOLIO' else 0.6
+    axes[0, 0].plot(cum_returns[col], label=col, lw=width, alpha=alpha)
+axes[0, 0].set_title('Growth of $1 Investment', fontsize=14)
+axes[0, 0].legend(loc='upper left', fontsize=8)
+axes[0, 0].set_ylabel('Value ($)')
+
+# --- 2. Top Right: Correlation Heatmap ---
+sns.heatmap(returns_df.corr(), annot=True, cmap='RdYlGn', ax=axes[0, 1], center=0, fmt=".2f")
+axes[0, 1].set_title('Asset Correlation Matrix (Interactive Risk)', fontsize=14)
+
+# --- 3. Bottom Left: Risk vs Return Scatter ---
+axes[1, 0].scatter(stats_df['StdDev'], stats_df['ExpectedReturn'], s=150, alpha=0.5, color='blue')
+# Add Portfolio Point
+port_return = portfolio_daily_return.mean()
+port_risk = portfolio_daily_return.std()
+axes[1, 0].scatter(port_risk, port_return, color='red', marker='*', s=400, label='Our Portfolio')
+# Annotate Assets
+for i, txt in enumerate(stats_df['Ticker']):
+    axes[1, 0].annotate(txt, (stats_df.StdDev[i], stats_df.ExpectedReturn[i]), xytext=(5,5), textcoords='offset points')
+axes[1, 0].set_title('The Efficient Frontier: Risk vs Return', fontsize=14)
+axes[1, 0].set_xlabel('Volatility (Daily Std Dev)')
+axes[1, 0].set_ylabel('Mean Daily Return')
+axes[1, 0].legend()
+
+# --- 4. Bottom Right: Portfolio Allocation Pie ---
+axes[1, 1].pie(stats_df['Weight'], labels=stats_df['Ticker'], autopct='%1.1f%%', 
+             startangle=140, colors=sns.color_palette('viridis', len(stats_df)))
+axes[1, 1].set_title('Final Weight Allocation (Inverse Volatility)', fontsize=14)
+
+plt.tight_layout(rect=[0, 0.03, 1, 0.95]) # Adjust for suptitle
+plt.show()
