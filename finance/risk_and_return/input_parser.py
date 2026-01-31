@@ -106,9 +106,6 @@ plt.show()
 #========================================================================================================================
 
 # All in 1
-import matplotlib.pyplot as plt
-import seaborn as sns
-
 # Set the style to look more 'financial'
 plt.style.use('seaborn-v0_8-whitegrid')
 fig, axes = plt.subplots(2, 2, figsize=(18, 12))
