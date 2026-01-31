@@ -39,7 +39,7 @@ class Risk:
     def correlation(covariance_ab,std_dev_a, std_dev_b):
         correlation = covariance_ab / (std_dev_a * std_dev_b)
         format_ans = f"The Correlation of the two assets is {correlation:.2f}"
-        return correlation,format_ans
+        return correlation,format_ans 
     @staticmethod
     def portfolio_risk_var_covar(weights,variance,covar_matrix):
        weights_np = np.array(weights)

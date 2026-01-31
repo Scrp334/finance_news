@@ -4,7 +4,7 @@ class Returns:
     @staticmethod
     def dividend_yield(dvdnd_per_share,price_per_share):
         dvdnd_yield_pcnt = (dvdnd_per_share / price_per_share ) * 100  
-        format_ans = f"Dividend yield is {dvdnd_yield_pcnt:.2f}% at {dvdn_per_share} dividend per share with {price+per_share} price per share"
+        format_ans = f"Dividend yield is {dvdnd_yield_pcnt:.2f}% at {dvdnd_per_share} dividend per share with {price_per_share} price per share"
         return (dvdnd_yield_pcnt / 100),format_ans
     @staticmethod
     def capital_gain(new_price,old_price):
