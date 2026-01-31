@@ -18,7 +18,7 @@ class Returns:
         return (h_p_t / 100),format_ans 
     @staticmethod
     def int_rate_of_return(interest_paid,loan_amount):
-        int_rate_of_return = (Interest paid / Loan Amount) * 100%
+        int_rate_of_return = (interest_paid / loan_amount) * 100
         format_ans = f"The Interest ratte of return is {int_rate_of_return:.2f}% for {loan_amount} loan amount on {interest_paid} interest paid"
         return (int_rate_of_return / 100), format_ans
     @staticmethod
@@ -33,6 +33,7 @@ class Returns:
         return expected_return,format_ans
     @staticmethod
     def portfolio_return(weights,expected_return):
-        portfolio_return = (sum(weight*return for weight,return in zip(weights,expected_returns)) ) * 100
+        portfolio_return = sum(weight*exp_return for weight,exp_return in zip(weights,expected_returns))  
         format_ans = f"The Portfolio return is {portfolio_return:.2f}%"
-        return (portfolio_return / 100), format_ans 
+        portfolio_return_pcnt = portfolio_return * 100
+        return (portfolio_return_pcnt / 100), format_ans 
