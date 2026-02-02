@@ -8,7 +8,7 @@ from risk import Risk
 
 st.set_page_config(page_title="NSE Quant Dashboard", layout="wide")
 
-st.title("🇰🇪 NSE Portfolio Optimizer")
+st.title(" Portfolio Optimizer")
 st.markdown("### Inverse Volatility Weighting Strategy")
 
 # 1. Sidebar for Data Upload
@@ -68,6 +68,8 @@ if uploaded_file:
         cum_returns = (1 + filtered_returns).cumprod()
         cum_returns['MY_PORTFOLIO'] = (1 + portfolio_daily_return).cumprod()
         st.line_chart(cum_returns)
+
+        
 
         # Download Button for Results
         st.download_button("Download Weights CSV", stats_df.to_csv().encode('utf-8'), "weights.csv", "text/csv")

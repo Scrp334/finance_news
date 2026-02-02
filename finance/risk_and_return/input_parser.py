@@ -42,7 +42,7 @@ portfolio_daily_return = returns_df.dot(weights_vector)
 cum_returns = (1 + returns_df).cumprod()
 cum_returns['PORTFOLIO'] = (1 + portfolio_daily_return).cumprod()
 
-
+"""
 #######----PLOTS----#####==============================================================================================
 # Part II
 # Create a heatmap
@@ -50,6 +50,8 @@ plt.figure(figsize=(10, 8))
 sns.heatmap(returns_df.corr(), annot=True, cmap='RdYlGn', center=0)
 plt.title('Asset Correlation Matrix (NSE Stocks)')
 plt.show() 
+"""
+
 
 #Part III
 # Create a pie chart of weights
@@ -145,3 +147,4 @@ axes[1, 1].set_title('Final Weight Allocation (Inverse Volatility)', fontsize=14
 
 plt.tight_layout(rect=[0, 0.03, 1, 0.95]) # Adjust for suptitle
 plt.show()
+
